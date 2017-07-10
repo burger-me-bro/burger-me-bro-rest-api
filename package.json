@@ -1,0 +1,21 @@
+{
+  "name": "burger-me-bro-rest-api",
+  "version": "1.0.0",
+  "description": "REST API for Burger Me Bro's",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burger-me-bro/burger-me-bro-rest-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/burger-me-bro/burger-me-bro-rest-api/issues"
+  },
+  "homepage": "https://github.com/burger-me-bro/burger-me-bro-rest-api#readme"
+}
