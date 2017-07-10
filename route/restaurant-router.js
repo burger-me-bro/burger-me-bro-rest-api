@@ -11,13 +11,13 @@ Router.post('/api/restaurant', bodyParser, (req, res, next) => {
     .catch(next);
 });
 
-Router.get('/api/restaruant/:id', bodyParser, (req, res, next) => {
+Router.get('/api/restaurant/:id', bodyParser, (req, res, next) => {
   Restaurant.findById(req.params.id)
-    .then(restaruant => res.json(restaruant))
+    .then(restaurant => res.json(restaurant))
     .catch(next);
 });
 
-Router.put('/api/restaruant/:id', bodyParser, (req, res, next) => {
+Router.put('/api/restaurant/:id', bodyParser, (req, res, next) => {
   let options = {
     runValidators: true,
     new: true,
@@ -27,7 +27,7 @@ Router.put('/api/restaruant/:id', bodyParser, (req, res, next) => {
     .catch(next);
 });
 
-Router.delete('/api/restaruant/:id', bodyParser, (req, res, next) => {
+Router.delete('/api/restaurant/:id', bodyParser, (req, res, next) => {
   Restaurant.findByIdAndRemove(req.params.id)
     .then(() => res.sendStatus(204))
     .catch(next);
