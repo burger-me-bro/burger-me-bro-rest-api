@@ -8,7 +8,6 @@ const superagent = require('superagent');
 const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
 
-
 let API_URL = process.env.API_URL;
 
 describe('testing auth router', () => {
@@ -26,6 +25,29 @@ describe('testing auth router', () => {
         })
         .then(res => {
           expect(res.status).toEqual(200);
+        });
+    });
+    it('should return a 400 for a bad request', () => {
+      return superagent.post(`${API_URL}/api/signup`)
+        .send({name: 1234})
+        .catch(res => {
+          expect(res.status).toEqual(400);
+        });
+    });
+    it('should return an error for server already running', () => {
+      server.start();
+      return superagent.post(`${API_URL}/api/signup`)
+        .catch(res => {
+          expect(res.status).toEqual(400);
+        });
+    });
+    it('should return an error for server not running running', () => {
+      server.stop();
+      return superagent.post(`${API_URL}/api/signup`)
+        .catch(err => {
+          console.log(err.code);
+          expect(err.code).toEqual('ECONNREFUSED');
+          server.start();
         });
     });
   });
