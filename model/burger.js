@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const burgerSchema = mongoose.Schema({
   name: {type:String, required:true, unique:true, minlength:1},
-  rating:{type:String, required:true, minlength:1, enum:['really bad','bad','average','good','really good']},
+  rating: {type:String, required:true, minlength:1, enum:['really bad','bad','average','good','really good']},
   price:{type:Number, required:true},
   flavor_profile: [{type:String, required:true, minlength:1, enum:['tangy','sweet','spicy','funky','crunchy','savory','greasy']}],
   description:{type:String, required:true, minlength:1},
