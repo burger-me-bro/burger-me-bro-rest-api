@@ -60,4 +60,5 @@ typings/
 .env
 
 
-.db
+db/
+db
