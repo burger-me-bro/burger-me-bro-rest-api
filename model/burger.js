@@ -10,9 +10,9 @@ const burgerSchema = mongoose.Schema({
   description:{type:String, required:true, minlength:1},
   photo_URL: {type:String, required:true, minlength:1},
   veggie:{type:Boolean, required:true, minlength:1}, //this might just be veggie: Boolean, need to check once routes are created....
-  restaurants: [{type: mongoose.Schema.Types.ObjectId, ref:'restaurants'}],
-  comments: [{type: mongoose.Schema.Types.ObjectId, ref:'comments'}],
+  restaurant: [{type: mongoose.Schema.Types.ObjectId, ref:'restaurant'}],
+  comment: [{type: mongoose.Schema.Types.ObjectId, ref:'comment'}],
 });
 
 
-module.exports = mongoose.model('burgers', burgerSchema);
+module.exports = mongoose.model('burger', burgerSchema);
