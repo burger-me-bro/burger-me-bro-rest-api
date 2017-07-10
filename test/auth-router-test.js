@@ -34,21 +34,5 @@ describe('testing auth router', () => {
           expect(res.status).toEqual(400);
         });
     });
-    it('should return an error for server already running', () => {
-      server.start();
-      return superagent.post(`${API_URL}/api/signup`)
-        .catch(res => {
-          expect(res.status).toEqual(400);
-        });
-    });
-    it('should return an error for server not running running', () => {
-      server.stop();
-      return superagent.post(`${API_URL}/api/signup`)
-        .catch(err => {
-          console.log(err.code);
-          expect(err.code).toEqual('ECONNREFUSED');
-          server.start();
-        });
-    });
   });
 });
