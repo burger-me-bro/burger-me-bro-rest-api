@@ -2,7 +2,7 @@
 
 const {Router} = require('express');
 
-const s3Upload = require('../lib/s3-upload-middleware.js');
+const s3Upload = require('../lib/s3-middleware.js');
 const bearerAuth = require('../lib/bearer-auth-middleware.js');
 const Burger = require('../model/burger.js');
 const bodyParser = require('body-parser').json();
