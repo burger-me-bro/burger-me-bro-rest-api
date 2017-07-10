@@ -13,13 +13,13 @@ mockUser.createOne = () => {
     username: faker.internet.userName(),
     email: faker.internet.email(),
   })
-  .passwordHashCreate(result.password)
-  .then( user => {
-    result.user = user;
-    return user.tokenCreate();
-  })
-  .then( token => {
-    result.token = token;
-    return result;
-  });
+    .passwordHashCreate(result.password)
+    .then(user => {
+      result.user = user;
+      return user.tokenCreate();
+    })
+    .then(token => {
+      result.token = token;
+      return result;
+    });
 };
