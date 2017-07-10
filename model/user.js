@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 const userSchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
   tokenSeed: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -38,6 +38,7 @@ userSchema.methods.tokenSeedCreate = function () {
       this.save()
         .then(() => resolve(this))
         .catch(err => {
+          console.log(err);
           if (tries < 1)
             return reject(new Error('server failed to create tokenSeed'));
           tries--;
