@@ -4,7 +4,7 @@
   "description": "REST API for Burger Me Bro's",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha",
     "lint": "eslint ."
   },
   "repository": {
@@ -17,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/burger-me-bro/burger-me-bro-rest-api/issues"
   },
-  "homepage": "https://github.com/burger-me-bro/burger-me-bro-rest-api#readme"
+  "homepage": "https://github.com/burger-me-bro/burger-me-bro-rest-api#readme",
+  "dependencies": {
+    "eslint": "^4.2.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3"
+  }
 }
