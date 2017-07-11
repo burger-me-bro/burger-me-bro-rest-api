@@ -5,6 +5,7 @@ require('dotenv').config({ path: `${__dirname}/../.test.env` });
 const expect = require('expect');
 const superagent = require('superagent');
 const mockUser = require('./lib/mock-user.js');
+const User = require('../model/user.js');
 
 require('./lib/aws-mock.js');
 const server = require('../lib/server.js');
@@ -125,6 +126,13 @@ describe('testing auth router', () => {
         })
         .catch(res => {
           expect(res.status).toEqual(400);
+        });
+    });
+    it('should fail to create token seed', () => {
+      new User().tokenSeedCreate()
+        .then(res => {
+          console.log(res);
+          expect(res.status).toEqual(200);
         });
     });
   });
