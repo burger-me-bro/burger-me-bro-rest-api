@@ -9,7 +9,6 @@ const superagent = require('superagent');
 const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
 const mockUser = require('./lib/mock-user.js');
-const mockBurger = require('./lib/mock-burger.js');
 
 let API_URL = process.env.API_URL;
 
@@ -17,7 +16,6 @@ describe('testing burger router', () => {
   before(server.start);
   after(server.stop);
   afterEach(cleanDB);
-  let tempBurger;
 
   describe('testing POST /api/burgers', () => {
     it('should return a 200', () => {
