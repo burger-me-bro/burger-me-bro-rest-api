@@ -26,11 +26,11 @@ burgerRouter.post('/api/burgers', bearerAuth, s3Upload('image'), (req,res, next)
 });
 
 
-burgerRouter.get('/api/burgers:id', (req, res, next) => {
+burgerRouter.get('/api/burgers/:id', (req, res, next) => {
   console.log('hit get /api/bars/:id');
   Burger.findById(req.params.id)
-    .then(bar => {
-      res.json(bar);
+    .then(burger => {
+      res.json(burger);
     })
     .catch(next);
 });
