@@ -32,4 +32,12 @@ describe('testing server', () => {
         server.start();
       });
   });
+  it('should return error for server not up', () => {
+    server.isOn = false;
+    server.stop()
+      .then(res => {
+        console.log(res);
+        expect(res.status).toEqual(500);
+      });
+  });
 });
