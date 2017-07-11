@@ -114,5 +114,18 @@ describe('testing auth router', () => {
           expect(res.status).toEqual(400);
         });
     });
+    it('should return no bearer auth provided', () => {
+      let testUser;
+      return mockUser.createOne()
+        .then(userData => {
+          testUser = userData.user;
+          console.log(testUser);
+          return superagent.post(`${API_URL}/api/burgers`)
+            .set('Authorization',  `Bearer`);
+        })
+        .catch(res => {
+          expect(res.status).toEqual(400);
+        });
+    });
   });
 });
