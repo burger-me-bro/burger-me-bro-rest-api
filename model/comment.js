@@ -11,9 +11,26 @@ const commentSchema = mongoose.Schema({
   date: {type: Date, required: true},
 });
 
-// commentSchema.pre('save', function (next) { 
-//   Burger.findById
-// });
+commentSchema.pre('save', function (next) { 
+  Burger.findById(this.burger)
+    .then(burger =>{
+      let setBurgerID = new Set(burger.comment);
+      setBurgerID.add(this._id);
+      burger.comment = Array.from(setBurgerID);
+      return burger.save();
+    })
+    .then(() => next())
+    .catch(() => next(new Error('validation failed to create comment because burger does not exist')));
+});
+
+commentSchema.post('remove', function(doc,next){  
+  Burger.findById(this.burger)
+    .then(burger => {
+      burger.comment = burger.comment.filter(comment => {
+        console.log(comment);
+      });
+    });
+});
 
 module.exports = mongoose.model('comment', commentSchema);
 
