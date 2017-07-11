@@ -9,6 +9,7 @@ const superagent = require('superagent');
 const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
 const mockUser = require('./lib/mock-user.js');
+const mockBurger = require('./lib/mock-burger.js');
 
 let API_URL = process.env.API_URL;
 
@@ -16,6 +17,7 @@ describe('testing burger router', () => {
   before(server.start);
   after(server.stop);
   afterEach(cleanDB);
+  let tempBurger;
 
   describe('testing POST /api/burgers', () => {
     it('should return a 200', () => {
@@ -48,6 +50,20 @@ describe('testing burger router', () => {
         })
         .catch(res => {
           expect(res.status).toEqual(400);
+        });
+    });
+  });
+  describe('testing GET /api/burgers', () => {
+    it('should return a 200, burger', () => {
+      return mockBurger.createOne()
+        .then(res => {
+          tempBurger = res.burger;
+          return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
+        })
+        .then(res => {
+          console.log(res);
+          expect(res).toExist();
+          expect(res.status).toEqual(200);
         });
     });
   });

@@ -17,46 +17,74 @@ describe('testing comment router', () => {
   before(server.start);
   after(server.stop);
   afterEach(cleanDB);
-  let tempBurger,tempUser, tempComment;
+  let tempBurger, tempUser, tempComment;
 
   describe('testing POST route', () => {
     it('should return a 200', () => {
       return mockBurger.createOne()
-        .then(res => {   
+        .then(res => {
           tempBurger = res.burger;
           tempUser = res.user;
           return superagent.post(`${API_URL}/api/comment`)
             .set('Authorization', `Bearer ${tempUser.token}`)
-            .set('user_id', tempUser.user._id.toString())
-            .set('burger_id', res.burger._id.toString())
-            .set('title', 'This Burger is bae')
-            .set('content', 'Let me tell you about this burger')
-            .set('date', new Date())
+            .send({
+              'title': 'This Burger is bae',
+              'content': 'Let me tell you about this burger',
+              'burger_id': tempBurger._id,
+            })
             .then(res => {
               expect(res.status).toEqual(200);
               expect(res.body.title).toEqual('This Burger is bae');
+              expect(res.body.burger_id).toEqual(tempBurger._id);
               expect(res.body._id).toExist();
             });
         });
     });
+    
+    it('should return a 400', () => {
+      return superagent.post(`${API_URL}/api/comment`)
+        .catch(res =>{
+          expect(res.status).toEqual(400);
+        });
+    });
   });
 
-  describe('testing GET route',()=>{
-    it('should return a 200', () =>{
+  describe('testing GET route', () => {
+    it('should return a 200', () => {
       return mockComment.createOne()
         .then(res => {
-          tempBurger =res.burger;
+          tempBurger = res.burger;
           tempUser = res.user;
           tempComment = res.comment;
-
           return superagent.get(`${API_URL}/api/comment/${tempComment._id.toString()}`);
         })
-        .then(result =>{
-          console.log(tempUser);
+        .then(result => {
           expect(result.status).toEqual(200);
           expect(result.body._id).toExist();
           expect(result.body.user_id).toEqual(tempUser.user._id);
-          expect(result.body.burger_id).toEqual(tempBurger._id);          
+          expect(result.body.burger_id).toEqual(tempBurger._id);
+        });
+    });
+  });
+
+  describe('testing PUT route ', () => {
+    let tempTitle = 'The burger regime';
+    it('should return a 200', () => {
+      return mockComment.createOne()
+        .then(res => {
+          tempBurger = res.burger;
+          tempUser = res.user;
+          tempComment = res.comment;
+          return superagent.put(`${API_URL}/api/comment/${tempComment._id.toString()}`)
+            .set('Authorization', `Bearer ${tempUser.token}`)
+            .send({'title': tempTitle});
+        })
+        .then(result => {
+          expect(result.status).toEqual(200);
+          expect(result.body._id).toExist();
+          expect(result.body.title).toEqual(tempTitle);
+          expect(result.body.user_id).toEqual(tempUser.user._id);
+          expect(result.body.burger_id).toEqual(tempBurger._id);
         });
     });
   });

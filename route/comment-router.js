@@ -8,11 +8,12 @@ const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const commentRouter = module.exports = new Router();
 
-commentRouter.post('/api/comment', bearerAuth, (req, res, next) => {
-  return new Comment({
+commentRouter.post('/api/comment', bearerAuth, jsonParser, (req, res, next) => {
+  new Comment({
     user_id: req.user._id.toString(),
-    title: req.headers.title,
-    content: req.headers.content,
+    title: req.body.title,
+    content: req.body.content,
+    burger_id: req.body.burger_id,
     date: new Date(),
   })
     .save()
