@@ -5,8 +5,8 @@ require('dotenv').config({ path: `${__dirname}/../.test.env` });
 
 const expect = require('expect');
 const superagent = require('superagent');
+const mockBurger = require('./lib/mock-burger.js');
 const mockUser = require('./lib/mock-user.js');
-const mockBurger = require('./lib/mock-burger.js')
 
 const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
@@ -22,13 +22,19 @@ describe('testing burger router', () => {
   describe('testing POST /api/burgers', () => {
     it('should return a 200', () => {
       let testUser;
-      return mockBurger.createOne()
+      return mockUser.createOne()
         .then(userData => {
           testUser = userData.user;
           console.log(testUser);
           return superagent.post(`${API_URL}/api/burgers`)
-            .set('Authorization',  `Bearer ${testUser.token}`)
-            .field('name', 'test_burger');
+            .set('Authorization',  `Bearer ${userData.token}`)
+            .field('name', 'test_burger')
+            .field('rating', 'good')
+            .field('price', 5)
+            .field('flavor_profile', 'tangy')
+            .field('description', 'so good!')
+            .field('veggie', false)
+            .attach('image', `${__dirname}/assets/burger.jpg`);
         })
         .then(res => {
           console.log(res);
