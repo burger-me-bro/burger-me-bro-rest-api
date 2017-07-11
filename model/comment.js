@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const commentSchema = mongoose.Schema({
   user_id: {type: mongoose.SchemaTypes.ObjectId, required:true},
+  burger_id:{type: mongoose.SchemaTypes.ObjectId, ref:'burger'},
   title: {type: String, required: true},
   content: {type:String, required: true, minLength:1},
   date: {type: Date, required: true},

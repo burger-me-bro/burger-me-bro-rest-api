@@ -29,7 +29,7 @@ mockBurger.createOne = () => {
     .then(user => {
       result.user = user;
       return new Burger({
-        name: faker.internet.userName(),
+        name: faker.internet.userName() + ' burger',
         rating: mockBurger.randomRating(),
         price: mockBurger.randomPrice(),
         flavor_profile: mockBurger.randomBurgerProfile(),
