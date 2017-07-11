@@ -81,7 +81,6 @@ describe('testing burger router', () => {
           return superagent.get(`${API_URL}/api/burgers/${tempBurger.name.toString()}`);
         })
         .catch(res => {
-          expect(res).toExist();
           expect(res.status).toEqual(404);
         });
     });
