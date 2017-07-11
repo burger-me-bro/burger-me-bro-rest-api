@@ -37,6 +37,8 @@ describe('testing burger router', () => {
         })
         .then(res => {
           expect(res.body).toExist();
+          expect(res.body.description).toEqual('so good!');
+          expect(res.body.name).toEqual('test_burgerr');
         });
     });
     it('should return a 400 for a bad request', () => {
