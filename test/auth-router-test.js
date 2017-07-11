@@ -34,7 +34,6 @@ describe('testing auth router', () => {
       return superagent.post(`${API_URL}/api/signup`)
         .send({username: 1234})
         .catch(res => {
-          console.log(res);
           expect(res.status).toEqual(400);
         });
     });
