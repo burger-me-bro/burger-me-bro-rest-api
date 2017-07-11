@@ -60,6 +60,5 @@ typings/
 .env
 .test.env
 
-
 db/
 db
