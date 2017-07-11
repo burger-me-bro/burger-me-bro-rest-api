@@ -40,10 +40,8 @@ describe('testing burger router', () => {
         });
     });
     it('should return a 400 for a bad request', () => {
-      let testUser;
       return mockUser.createOne()
         .then(userData => {
-          testUser = userData.user;
           return superagent.post(`${API_URL}/api/burgers`)
             .set('Authorization',  `Bearer ${userData.token}`);
         })
