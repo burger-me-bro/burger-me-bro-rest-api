@@ -53,18 +53,5 @@ describe('testing burger router', () => {
         });
     });
   });
-  describe('testing GET /api/burgers', () => {
-    it('should return a 200, burger', () => {
-      return mockBurger.createOne()
-        .then(res => {
-          tempBurger = res.burger;
-          return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
-        })
-        .then(res => {
-          console.log(res);
-          expect(res).toExist();
-          expect(res.status).toEqual(200);
-        });
-    });
-  });
+
 });
