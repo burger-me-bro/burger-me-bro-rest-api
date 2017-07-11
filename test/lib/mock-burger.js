@@ -16,12 +16,9 @@ mockBurger.randomRating = () => {
   return ratings[Math.floor(Math.random()*ratings.length)];
 };
 
-
 mockBurger.randomPrice = () => {
   return Math.floor(Math.random()*20);
 };
-
-
 
 mockBurger.createOne = () => {
   let result = {};
