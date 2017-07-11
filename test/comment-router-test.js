@@ -30,12 +30,12 @@ describe('testing comment router', () => {
             .send({
               'title': 'This Burger is bae',
               'content': 'Let me tell you about this burger',
-              'burger_id': tempBurger._id,
+              'burger': tempBurger._id,
             })
             .then(res => {
               expect(res.status).toEqual(200);
               expect(res.body.title).toEqual('This Burger is bae');
-              expect(res.body.burger_id).toEqual(tempBurger._id);
+              expect(res.body.burger).toEqual(tempBurger._id);
               expect(res.body._id).toExist();
             });
         });
@@ -61,8 +61,8 @@ describe('testing comment router', () => {
         .then(result => {
           expect(result.status).toEqual(200);
           expect(result.body._id).toExist();
-          expect(result.body.user_id).toEqual(tempUser.user._id);
-          expect(result.body.burger_id).toEqual(tempBurger._id);
+          expect(result.body.user).toEqual(tempUser.user._id);
+          expect(result.body.burger).toEqual(tempBurger._id);
         });
     });
   });
@@ -83,8 +83,8 @@ describe('testing comment router', () => {
           expect(result.status).toEqual(200);
           expect(result.body._id).toExist();
           expect(result.body.title).toEqual(tempTitle);
-          expect(result.body.user_id).toEqual(tempUser.user._id);
-          expect(result.body.burger_id).toEqual(tempBurger._id);
+          expect(result.body.user).toEqual(tempUser.user._id);
+          expect(result.body.burger).toEqual(tempBurger._id);
         });
     });
   });

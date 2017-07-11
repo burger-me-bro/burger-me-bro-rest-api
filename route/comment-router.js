@@ -10,10 +10,10 @@ const commentRouter = module.exports = new Router();
 
 commentRouter.post('/api/comment', bearerAuth, jsonParser, (req, res, next) => {
   new Comment({
-    user_id: req.user._id.toString(),
+    user: req.user._id.toString(),
     title: req.body.title,
     content: req.body.content,
-    burger_id: req.body.burger_id,
+    burger: req.body.burger,
     date: new Date(),
   })
     .save()
