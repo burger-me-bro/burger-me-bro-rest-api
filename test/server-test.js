@@ -17,6 +17,13 @@ describe('testing server', () => {
         expect(res.status).toEqual(400);
       });
   });
+  it('should return error for server up', () => {
+    server.start()
+      .then(res => {
+        console.log(res);
+        expect(res.status).toEqual(500);
+      });
+  });
   it('should return an error for server not running running', () => {
     server.stop();
     return superagent.post(`${API_URL}/api/signup`)
