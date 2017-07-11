@@ -6,6 +6,7 @@ const expect = require('expect');
 const superagent = require('superagent');
 const mockUser = require('./lib/mock-user.js');
 
+require('./lib/aws-mock.js');
 const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
 
