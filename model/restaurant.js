@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const restaurantSchema = mongoose.Schema({
-  name: {tyep:String, required: true, unique: true},
+  name: {type:String, required: true, unique: true},
   location: {type: String, required: true},
   burger: [{type: mongoose.Schema.Types.ObjectId, ref: 'burger'}],
   photo_url: {type: String, required: true},
