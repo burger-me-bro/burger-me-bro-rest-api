@@ -27,12 +27,7 @@ describe('testing restaurant router', () => {
           tempUser = res.user;
 
           return superagent.post(`${API_URL}/api/restaurant`)
-<<<<<<< HEAD
             .set('Authorization', `Bearer ${tempUser.token}`)
-=======
-            .set('Authorization',  `Bearer ${tempUser.token}`)
->>>>>>> 597b9aab4ad48ae8cebfd626532cd1660a69cca2
-
             .field('name', 'Burger')
             .field('location', 'Seattle, WA')
             .field('burger', `${tempBurger._id}`)
@@ -91,7 +86,6 @@ describe('testing restaurant router', () => {
         });
     });
   });
-<<<<<<< HEAD
 
   describe('testing DELETE route', () => {
     it('should return a 204', () => {
@@ -126,6 +120,4 @@ describe('testing restaurant router', () => {
         });
     });
   });
-=======
->>>>>>> 597b9aab4ad48ae8cebfd626532cd1660a69cca2
 });
