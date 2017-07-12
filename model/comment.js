@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Burger = require('../model/burger.js');
+const Burger = require('./burger.js');
 
 const commentSchema = mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref:'user', required:true},
@@ -11,20 +11,25 @@ const commentSchema = mongoose.Schema({
   date: {type: Date, required: true},
 });
 
-commentSchema.pre('save', function (next) { 
-  Burger.findById(this.burger)
-    .then(burger =>{
-      let setBurgerID = new Set(burger.comment);
-      setBurgerID.add(this._id);
-      burger.comment = Array.from(setBurgerID);
-      return burger.save();
-    })
-    .then(() => next())
-    .catch(() => next(new Error('validation failed to create comment because burger does not exist')));
+commentSchema.pre('save', function (next) {
+  if(this.burger) {
+
+
+    Burger.findById(this.burger)
+      .then(burger =>{
+        let setBurgerID = new Set(burger.comment);
+        setBurgerID.add(this._id);
+        burger.comment = Array.from(setBurgerID);
+        return burger.save();
+      })
+      .then(() => next())
+      .catch(() => next(new Error('validation failed to create comment because burger does not exist')));
+  }
+  next();
 });
 
-commentSchema.post('remove', function(doc,next){  
-  
+commentSchema.post('remove', function(doc,next){
+
   Burger.findById(doc.burger)
     .then(burger => {
       burger.comment = burger.comment.filter(comment => doc._id.toString() !== comment.toString());
@@ -35,4 +40,3 @@ commentSchema.post('remove', function(doc,next){
 });
 
 module.exports = mongoose.model('comment', commentSchema);
-

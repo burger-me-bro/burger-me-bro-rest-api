@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 
+
 const burgerSchema = mongoose.Schema({
   name: {type:String, required:true, unique:true, minlength:1},
   rating: {type:String, required:true, minlength:1, enum:['really bad','bad','average','good','really good']},
@@ -13,6 +14,9 @@ const burgerSchema = mongoose.Schema({
   restaurant: [{type: mongoose.Schema.Types.ObjectId, ref:'restaurant'}],
   comment: [{type: mongoose.Schema.Types.ObjectId, ref:'comment'}],
 });
+
+
+
 
 
 module.exports = mongoose.model('burger', burgerSchema);
