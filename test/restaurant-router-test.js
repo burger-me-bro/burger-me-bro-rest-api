@@ -4,7 +4,7 @@ require('dotenv').config({ path: `${process.cwd()}/.test.env` });
 const superagent = require('superagent');
 const expect = require('expect');
 
-require('./lib/aws-mock.js');
+// require('./lib/aws-mock.js');
 const mockRestaurant = require('./lib/mock-restaurant.js');
 const mockBurger = require('./lib/mock-burger.js');
 
@@ -21,7 +21,6 @@ describe('testing restaurant router', () => {
 
   describe('testing POST route', () => {
     it('should return 200', () => {
-        
       return mockBurger.createOne()
         .then(res => {
           tempBurger = res.burger;
@@ -36,16 +35,13 @@ describe('testing restaurant router', () => {
         })
         .then(res => {
           expect(res.status).toEqual(200);
-          expect(res.body).toExist();
           expect(res.body.name).toEqual('Burger');
           expect(res.body.location).toEqual('Seattle, WA');
           expect(res.body.burger[0]).toEqual(tempBurger._id);
           expect(res.body.photo_url).toExist();
           expect(res.body._id).toExist();
         });
-        
     });
-    
   });
   it('should return a 400', () => {
     return superagent.post(`${API_URL}/api/restaurant`)
@@ -87,16 +83,6 @@ describe('testing restaurant router', () => {
           expect(res.body._id).toExist();
           expect(res.body.userID).toEqual(tempUser.user._id);
           expect(res.body.burger[0]).toEqual(tempBurger._id);
-        });
-    });
-    it('should return a 404 error', () => {
-      return mockRestaurant.createOne()
-        .then(res => {
-          tempRestaurant = res.restaurant;
-          return superagent.get(`${API_URL}/api/restaurant/${tempRestaurant.name.toString()}`);
-        })
-        .catch(res => {
-          expect(res.status).toEqual(404);
         });
     });
   });
