@@ -35,7 +35,7 @@ burgerRouter.get('/api/burgers/:id', (req, res, next) => {
     .catch(next);
 });
 
-burgerRouter.put('/api/burgers/:id', bodyParser, (req, res, next) => {
+burgerRouter.put('/api/burgers/:id', bearerAuth, bodyParser, (req, res, next) => {
   let options = {
     runValidators: true,
     new: true,
