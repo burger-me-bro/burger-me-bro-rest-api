@@ -116,16 +116,17 @@ describe('testing comment router', () => {
           expect(result.status).toEqual(200);
           expect(result.body.comment).toInclude(tempComment._id);
         })
-        .then(() =>{
+        .then(() => {
           return superagent.delete(`${API_URL}/api/comment/${tempComment._id.toString()}`)
             .set('Authorization', `Bearer ${tempUser.token}`);
         })
-        .then(result =>{
+        .then(result => {
           expect(result.status).toEqual(204);
           return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
         })
         .then(result => {
-          console.log(result.body);
+          expect(result.status).toEqual(200);
+          expect(result.body.comment).toNotInclude(tempComment._id);
         });
     });
   });

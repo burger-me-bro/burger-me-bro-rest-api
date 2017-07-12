@@ -39,7 +39,8 @@ commentRouter.put('/api/comment/:id', bearerAuth, jsonParser, (req, res, next) =
 
 commentRouter.delete('/api/comment/:id', bearerAuth, (req, res, next) => {
   console.log('hit DELETE /api/comment/:id');
-  Comment.findByIdAndRemove(req.params.id)
+  Comment.findById(req.params.id)
+    .then(comment => comment.remove())
     .then(() => res.sendStatus(204))
     .catch(next);
 });
