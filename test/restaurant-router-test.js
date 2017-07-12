@@ -87,9 +87,6 @@ describe('testing restaurant router', () => {
     });
   });
 
-<<<<<<< HEAD
-
-=======
   describe('testing PUT route ', () => {
     let tempName = 'The Happy Burger Place';
     it('should return a 200', () => {
@@ -145,5 +142,4 @@ describe('testing restaurant router', () => {
         });
     });
   });
->>>>>>> d60a6ad63d657799397fe3132b0f2063c2c79de9
 });
