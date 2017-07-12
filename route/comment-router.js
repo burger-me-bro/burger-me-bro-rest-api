@@ -10,10 +10,10 @@ const commentRouter = module.exports = new Router();
 
 commentRouter.post('/api/comment', bearerAuth, jsonParser, (req, res, next) => {
   new Comment({
-    user_id: req.user._id.toString(),
+    user: req.user._id.toString(),
     title: req.body.title,
     content: req.body.content,
-    burger_id: req.body.burger_id,
+    burger: req.body.burger,
     date: new Date(),
   })
     .save()
@@ -38,7 +38,9 @@ commentRouter.put('/api/comment/:id', bearerAuth, jsonParser, (req, res, next) =
 });
 
 commentRouter.delete('/api/comment/:id', bearerAuth, (req, res, next) => {
-  Comment.findByIdAndRemove(req.params.id)
+  console.log('hit DELETE /api/comment/:id');
+  Comment.findById(req.params.id)
+    .then(comment => comment.remove())
     .then(() => res.sendStatus(204))
     .catch(next);
 });
