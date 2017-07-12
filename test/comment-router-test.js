@@ -30,20 +30,34 @@ describe('testing comment router', () => {
             .send({
               'title': 'This Burger is bae',
               'content': 'Let me tell you about this burger',
-              'burger_id': tempBurger._id,
+              'burger': tempBurger._id,
+            })
+            .then(res => {
+              tempComment = res.body;
+              expect(res.status).toEqual(200);
+              expect(res.body.title).toEqual('This Burger is bae');
+              expect(res.body.burger).toEqual(tempBurger._id);
+              expect(res.body._id).toExist();
+              return superagent.get(`${API_URL}/api/burgers/${tempBurger._id}`);
             })
             .then(res => {
               expect(res.status).toEqual(200);
-              expect(res.body.title).toEqual('This Burger is bae');
-              expect(res.body.burger_id).toEqual(tempBurger._id);
-              expect(res.body._id).toExist();
+              expect(res.body.comment).toInclude(tempComment._id);
             });
         });
     });
 
     it('should return a 400', () => {
       return superagent.post(`${API_URL}/api/comment`)
-        .catch(res =>{
+        .catch(res => {
+          expect(res.status).toEqual(400);
+        });
+    });
+
+    it('should return a 400 due to invalid burger id', () => {
+      return superagent.post(`${API_URL}/api/comment`)
+        .field('burger', 'not a valid id')
+        .catch(res => {
           expect(res.status).toEqual(400);
         });
     });
@@ -61,8 +75,8 @@ describe('testing comment router', () => {
         .then(result => {
           expect(result.status).toEqual(200);
           expect(result.body._id).toExist();
-          expect(result.body.user_id).toEqual(tempUser.user._id);
-          expect(result.body.burger_id).toEqual(tempBurger._id);
+          expect(result.body.user).toEqual(tempUser.user._id);
+          expect(result.body.burger).toEqual(tempBurger._id);
         });
     });
   });
@@ -77,14 +91,41 @@ describe('testing comment router', () => {
           tempComment = res.comment;
           return superagent.put(`${API_URL}/api/comment/${tempComment._id.toString()}`)
             .set('Authorization', `Bearer ${tempUser.token}`)
-            .send({'title': tempTitle});
+            .send({ 'title': tempTitle });
         })
         .then(result => {
           expect(result.status).toEqual(200);
           expect(result.body._id).toExist();
           expect(result.body.title).toEqual(tempTitle);
-          expect(result.body.user_id).toEqual(tempUser.user._id);
-          expect(result.body.burger_id).toEqual(tempBurger._id);
+          expect(result.body.user).toEqual(tempUser.user._id);
+          expect(result.body.burger).toEqual(tempBurger._id);
+        });
+    });
+  });
+
+  describe('testing DELETE route', () => {
+    it('should respond with a 204', () => {
+      return mockComment.createOne()
+        .then(res => {
+          tempBurger = res.burger;
+          tempUser = res.user;
+          tempComment = res.comment;
+          return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
+        })
+        .then(result => {
+          expect(result.status).toEqual(200);
+          expect(result.body.comment).toInclude(tempComment._id);
+        })
+        .then(() =>{
+          return superagent.delete(`${API_URL}/api/comment/${tempComment._id.toString()}`)
+            .set('Authorization', `Bearer ${tempUser.token}`);
+        })
+        .then(result =>{
+          expect(result.status).toEqual(204);
+          return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
+        })
+        .then(result => {
+          console.log(result.body);
         });
     });
   });

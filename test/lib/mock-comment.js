@@ -14,8 +14,8 @@ mockComment.createOne = () => {
       res.burger = result.burger;
       res.user = result.user;
       return new Comment({
-        user_id: res.user.user._id.toString(),
-        burger_id: res.burger._id.toString(),
+        user: res.user.user._id.toString(),
+        burger: res.burger._id.toString(),
         title: faker.random.words(4),
         content: faker.lorem.paragraph(5),
         date: new Date(),
