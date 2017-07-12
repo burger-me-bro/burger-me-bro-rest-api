@@ -60,6 +60,7 @@ describe('testing restaurant router', () => {
         expect(res.status).toEqual(400);
       });
   });
+
   it('should return a 500 for a server error', () => {
     return mockRestaurant.createOne()
       .then(userData => {
