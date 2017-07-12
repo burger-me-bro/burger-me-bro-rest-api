@@ -115,6 +115,7 @@ describe('testing auth router', () => {
           expect(res.status).toEqual(400);
         });
     });
+
     it('should return no bearer auth provided', () => {
       let testUser;
       return mockUser.createOne()
@@ -128,10 +129,10 @@ describe('testing auth router', () => {
           expect(res.status).toEqual(400);
         });
     });
+
     it('should fail to create token seed', () => {
       new User().tokenSeedCreate()
         .then(res => {
-          console.log(res);
           expect(res.status).toEqual(200);
         });
     });

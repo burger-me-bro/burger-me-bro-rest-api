@@ -12,7 +12,7 @@ const restaurantRouter = module.exports = new Router();
 
 
 restaurantRouter.post('/api/restaurant', bearerAuth, s3Upload('image'), (req, res, next) => {
-  console.log('look here!!!!! POST!');
+  console.log('hit POST route for restaurant');
   new Restaurant({
     userID: req.user._id.toString(),
     name: req.body.name,
@@ -26,14 +26,14 @@ restaurantRouter.post('/api/restaurant', bearerAuth, s3Upload('image'), (req, re
 });
 
 restaurantRouter.get('/api/restaurant/:id', bodyParser, (req, res, next) => {
-  console.log('look here!!!!! GET');
+  console.log('hit GET route for restaruant');
   Restaurant.findById(req.params.id)
     .then(restaurant => res.json(restaurant))
     .catch(next);
 });
 
 restaurantRouter.put('/api/restaurant/:id', bodyParser, (req, res, next) => {
-  console.log('look here!!!!! PUT');
+  console.log('hit PUT route for restaurant');
   let options = {
     runValidators: true,
     new: true,

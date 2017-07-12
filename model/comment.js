@@ -12,6 +12,8 @@ const commentSchema = mongoose.Schema({
 });
 
 commentSchema.pre('save', function (next) {
+  if(this.burger) {
+
 
     Burger.findById(this.burger)
       .then(burger =>{
@@ -22,6 +24,8 @@ commentSchema.pre('save', function (next) {
       })
       .then(() => next())
       .catch(() => next(new Error('validation failed to create comment because burger does not exist')));
+  }
+  next();
 });
 
 commentSchema.post('remove', function(doc,next){
