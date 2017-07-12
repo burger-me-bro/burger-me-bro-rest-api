@@ -142,7 +142,6 @@ describe('testing burger router', () => {
             .set('Authorization',  `Bearer ${tempUser.token}`);
         })
         .then(res => {
-
           expect(res.status).toEqual(204);
         });
     });
