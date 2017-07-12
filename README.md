@@ -9,16 +9,20 @@ REST API for Burger Me Bro's
 
 **/api/signup**  
 * **Description**  
-  A new user is created and authenticated by signing up with the following:
-
-  * Username  
-  * Password  
-  * Email  
-
+  A new user is created and authenticated by signing up with a username, password, and email.  The password is hashed and a token is returned that will be used to authorize the user for future logins.
 
 * **Required Data**
+  * username
+  * password
+  * email
 
-* **Example Response**
+
+* **Example Response**  
+  ```
+  Why is it not updating, dude?
+  ```
+
+
 
 **GET** for logging into a user account.
 
