@@ -11,6 +11,7 @@ const cleanDB = require('./lib/clean-db.js');
 const mockUser = require('./lib/mock-user.js');
 const mockBurger = require('./lib/mock-burger.js');
 
+
 let API_URL = process.env.API_URL;
 
 describe('testing burger router', () => {
@@ -24,6 +25,7 @@ describe('testing burger router', () => {
       let testUserData;
       return mockUser.createOne()
         .then(userData => {
+
           testUserData = userData;
           return superagent.post(`${API_URL}/api/burgers`)
             .set('Authorization',  `Bearer ${testUserData.token}`)
@@ -82,6 +84,61 @@ describe('testing burger router', () => {
         })
         .catch(res => {
           expect(res.status).toEqual(404);
+        });
+    });
+  });
+
+
+
+
+
+
+
+  describe('testing PUT /api/burgers', () => {
+    it('should respond with the updated burger', () => {
+      let tempBurger, tempUser;
+      return mockBurger.createOne()
+        .then(result => {
+          tempBurger = result.burger;
+          tempUser = result.user;
+          return superagent.put(`${API_URL}/api/burgers/${tempBurger._id.toString()}`)
+            .set('Authorization',  `Bearer ${tempUser.token}`)
+            .send({'description':'updated'});
+        })
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body.description).toEqual('updated');
+        });
+    });
+    it('should send over a 404 error', () => {
+      let tempBurger, tempUser;
+      return mockBurger.createOne()
+        .then(result => {
+          tempBurger = result.burger;
+          tempUser = result.user;
+
+          return superagent.put(`${API_URL}/api/burgers/${tempBurger.description.toString()}`)
+            .set('Authorization',  `Bearer ${tempUser.token}`)
+            .send({'description':'updated'});
+        })
+        .catch(res => {
+          expect(res.status).toEqual(404);
+        });
+    });
+  });
+
+  describe('testing the Delete route', () => {
+    it('should delete the burger put into the database...', () => {
+      let tempBurger, tempUser;
+      return mockBurger.createOne()
+        .then(result => {
+          tempBurger = result.burger;
+          tempUser = result.user;
+          return superagent.delete(`${API_URL}/api/burgers/${tempBurger._id.toString()}`)
+            .set('Authorization',  `Bearer ${tempUser.token}`);
+        })
+        .then(res => {
+          expect(res.status).toEqual(204);
         });
     });
   });
