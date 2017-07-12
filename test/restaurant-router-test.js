@@ -28,13 +28,7 @@ describe('testing restaurant router', () => {
           tempUser = res.user;
 
           return superagent.post(`${API_URL}/api/restaurant`)
-<<<<<<< HEAD
             .set('Authorization', `Bearer ${tempUser.token}`)
-=======
-          
-            .set('Authorization',  `Bearer ${tempUser.token}`)
-
->>>>>>> 0a0c862790d37206ab696e05802bf9875befdcbc
             .field('name', 'Burger')
             .field('location', 'Seattle, WA')
             .field('burger', `${tempBurger._id}`)
