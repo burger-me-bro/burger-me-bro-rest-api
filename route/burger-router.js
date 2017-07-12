@@ -10,7 +10,6 @@ const bodyParser = require('body-parser').json();
 const burgerRouter = module.exports = new Router();
 
 burgerRouter.post('/api/burgers', bearerAuth, s3Upload('image'), (req,res, next) => {
-  console.log('hitting post /api/burgers route');
   new Burger({
     name: req.body.name,
     rating: req.body.rating,
@@ -27,7 +26,6 @@ burgerRouter.post('/api/burgers', bearerAuth, s3Upload('image'), (req,res, next)
 
 
 burgerRouter.get('/api/burgers/:id', (req, res, next) => {
-  console.log('hit get /api/bars/:id');
   Burger.findById(req.params.id)
     .then(burger => {
       res.json(burger);
@@ -40,7 +38,6 @@ burgerRouter.put('/api/burgers/:id', bearerAuth, bodyParser, (req, res, next) =>
     runValidators: true,
     new: true,
   };
-  console.log(req.body);
   Burger.findByIdAndUpdate(req.params.id, req.body, options)
     .then(burger => res.json(burger))
     .catch(next);

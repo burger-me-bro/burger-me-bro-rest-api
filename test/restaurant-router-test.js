@@ -16,7 +16,7 @@ const API_URL = `http://localhost:${process.env.PORT}`;
 describe('testing restaurant router', () => {
   before(server.start);
   after(server.stop);
-  afterEach(cleanDB);  
+  afterEach(cleanDB);
   let tempBurger, tempUser, tempRestaurant;
 
   describe('testing POST route', () => {
@@ -25,10 +25,10 @@ describe('testing restaurant router', () => {
         .then(res => {
           tempBurger = res.burger;
           tempUser = res.user;
-          
+
           return superagent.post(`${API_URL}/api/restaurant`)
             .set('Authorization',  `Bearer ${tempUser.token}`)
-          
+
             .field('name', 'Burger')
             .field('location', 'Seattle, WA')
             .field('burger', `${tempBurger._id}`)
@@ -67,8 +67,8 @@ describe('testing restaurant router', () => {
         expect(res.status).toEqual(500);
       });
   });
-  
-  
+
+
   describe('testing GET route', () => {
     it('should return a 200', () => {
       return mockRestaurant.createOne()
@@ -77,7 +77,7 @@ describe('testing restaurant router', () => {
           tempUser = res.user;
           tempRestaurant = res.restaurant;
           return superagent.get(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`);
-          
+
         })
         .then(res => {
           expect(res.status).toEqual(200);
@@ -87,10 +87,4 @@ describe('testing restaurant router', () => {
         });
     });
   });
-
-   
 });
-
-
-
-

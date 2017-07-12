@@ -27,7 +27,6 @@ describe('testing burger router', () => {
         .then(userData => {
 
           testUserData = userData;
-          console.log(testUserData);
           return superagent.post(`${API_URL}/api/burgers`)
             .set('Authorization',  `Bearer ${testUserData.token}`)
             .field('name', 'test_burgerr')
@@ -39,7 +38,6 @@ describe('testing burger router', () => {
             .attach('image', `${__dirname}/assets/burger.jpg`);
         })
         .then(res => {
-          console.log('res^^^^^',res);
           expect(res.body).toExist();
           expect(res.body.description).toEqual('so good!');
           expect(res.body.name).toEqual('test_burgerr');
@@ -103,7 +101,6 @@ describe('testing burger router', () => {
         .then(result => {
           tempBurger = result.burger;
           tempUser = result.user;
-          console.log('tempuser.token!!!!!',tempUser.token);
           return superagent.put(`${API_URL}/api/burgers/${tempBurger._id.toString()}`)
             .set('Authorization',  `Bearer ${tempUser.token}`)
             .send({'description':'updated'});
@@ -125,7 +122,6 @@ describe('testing burger router', () => {
             .send({'description':'updated'});
         })
         .catch(res => {
-          console.log('res.status',res.status);
           expect(res.status).toEqual(404);
         });
     });
