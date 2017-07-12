@@ -8,7 +8,7 @@ const crypto = require('crypto');
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   tokenSeed: { type: String, required: true, unique: true },
-  passwordHash: { type: String, required: true },
+  passwordHash: { type: String, required: true},
   email: { type: String, required: true, unique: true },
 });
 
@@ -32,7 +32,6 @@ userSchema.methods.passwordHashCompare = function (password) {
 userSchema.methods.tokenSeedCreate = function () {
   return new Promise((resolve, reject) => {
     let tries = 1;
-
     let _tokenSeedCreate = () => {
       this.tokenSeed = crypto.randomBytes(32).toString('hex');
       this.save()
