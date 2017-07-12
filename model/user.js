@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 const userSchema = mongoose.Schema({
-  username: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique:true, index: {unique: true }},
   tokenSeed: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true},
   email: { type: String, required: true, unique: true },
