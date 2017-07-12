@@ -38,7 +38,7 @@ describe('testing comment router', () => {
               expect(res.body.title).toEqual('This Burger is bae');
               expect(res.body.burger).toEqual(tempBurger._id);
               expect(res.body._id).toExist();
-              return superagent.get(`${API_URL}/api/burgers/${tempBurger._id}`)
+              return superagent.get(`${API_URL}/api/burgers/${tempBurger._id}`);
             })
             .then(res => {
               expect(res.status).toEqual(200);
