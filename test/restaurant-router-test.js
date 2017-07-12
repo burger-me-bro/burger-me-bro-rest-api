@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config({path: `${process.cwd()}/.test.env`});
+require('dotenv').config({ path: `${process.cwd()}/.test.env` });
 const superagent = require('superagent');
 const expect = require('expect');
 
@@ -16,7 +16,7 @@ const API_URL = `http://localhost:${process.env.PORT}`;
 describe('testing restaurant router', () => {
   before(server.start);
   after(server.stop);
-  afterEach(cleanDB);  
+  afterEach(cleanDB);
   let tempBurger, tempUser, tempRestaurant;
 
   describe('testing POST route', () => {
@@ -25,10 +25,10 @@ describe('testing restaurant router', () => {
         .then(res => {
           tempBurger = res.burger;
           tempUser = res.user;
-          
+
           return superagent.post(`${API_URL}/api/restaurant`)
-            .set('Authorization',  `Bearer ${tempUser.token}`)
-          
+            .set('Authorization', `Bearer ${tempUser.token}`)
+
             .field('name', 'Burger')
             .field('location', 'Seattle, WA')
             .field('burger', `${tempBurger._id}`)
@@ -46,7 +46,7 @@ describe('testing restaurant router', () => {
   });
   it('should return a 400', () => {
     return superagent.post(`${API_URL}/api/restaurant`)
-      .catch(res =>{
+      .catch(res => {
         expect(res.status).toEqual(400);
       });
   });
@@ -61,14 +61,14 @@ describe('testing restaurant router', () => {
     return mockRestaurant.createOne()
       .then(userData => {
         return superagent.post(`${API_URL}/api/restaurant`)
-          .set('Authorization',  `Bearer ${userData.token}`);
+          .set('Authorization', `Bearer ${userData.token}`);
       })
       .catch(res => {
         expect(res.status).toEqual(500);
       });
   });
-  
-  
+
+
   describe('testing GET route', () => {
     it('should return a 200', () => {
       return mockRestaurant.createOne()
@@ -77,7 +77,7 @@ describe('testing restaurant router', () => {
           tempUser = res.user;
           tempRestaurant = res.restaurant;
           return superagent.get(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`);
-          
+
         })
         .then(res => {
           expect(res.status).toEqual(200);
@@ -88,7 +88,39 @@ describe('testing restaurant router', () => {
     });
   });
 
-   
+  describe('testing DELETE route', () => {
+    it('should return a 204', () => {
+      return mockRestaurant.createOne()
+        .then(res => {
+          tempBurger = res.burger;
+          tempUser = res.user;
+          tempRestaurant = res.restaurant;
+          return superagent.delete(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`)
+            .set('Authorization', `Bearer ${tempUser.token}`);
+        })
+        .then(res => {
+          expect(res.status).toEqual(204);
+          return superagent.get(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`);
+        })
+        .catch(res => {
+          expect(res.status).toEqual(404);
+        });
+    });
+
+    it('should return a 400', () => {
+      return mockRestaurant.createOne()
+        .then(res => {
+          tempBurger = res.burger;
+          tempUser = res.user;
+          tempRestaurant = res.restaurant;
+          return superagent.delete(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`)
+            .set('Authorization', `Bearer invalidtoken123123`);
+        })
+        .catch(res => {
+          expect(res.status).toEqual(400);
+        });
+    });
+  });
 });
 
 
