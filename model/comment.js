@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const Burger = require('../model/burger.js');
 
 const commentSchema = mongoose.Schema({
-  user: {type: mongoose.SchemaTypes.ObjectId, required:true},
-  burger:{type: mongoose.SchemaTypes.ObjectId, ref:'burger'},
+  user: {type: mongoose.Schema.Types.ObjectId, ref:'user', required:true},
+  burger:{type: mongoose.Schema.Types.ObjectId, ref:'burger'},
   title: {type: String, required: true},
   content: {type:String, required: true, minLength:1},
   date: {type: Date, required: true},
@@ -24,12 +24,14 @@ commentSchema.pre('save', function (next) {
 });
 
 commentSchema.post('remove', function(doc,next){  
-  Burger.findById(this.burger)
+  console.log('the doc',doc);
+  Burger.findById(doc.burger)
     .then(burger => {
-      burger.comment = burger.comment.filter(comment => {
-        console.log(comment);
-      });
-    });
+      burger.comment = burger.comment.filter(comment => comment._id !== doc._id);
+      return burger.save();
+    })
+    .then(()=> next())
+    .catch(next);
 });
 
 module.exports = mongoose.model('comment', commentSchema);

@@ -53,6 +53,14 @@ describe('testing comment router', () => {
           expect(res.status).toEqual(400);
         });
     });
+
+    it('should return a 400 due to invalid burger id', () => {
+      return superagent.post(`${API_URL}/api/comment`)
+        .field('burger', 'not a valid id')
+        .catch(res => {
+          expect(res.status).toEqual(400);
+        });
+    });
   });
 
   describe('testing GET route', () => {
@@ -102,11 +110,22 @@ describe('testing comment router', () => {
           tempBurger = res.burger;
           tempUser = res.user;
           tempComment = res.comment;
-          return superagent.get(`${API_URL}/api/comment/${tempComment._id.toString()}`);
+          return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
         })
         .then(result => {
           expect(result.status).toEqual(200);
-          expect(result.body).toExist();
+          expect(result.body.comment).toInclude(tempComment._id);
+        })
+        .then(() =>{
+          return superagent.delete(`${API_URL}/api/comment/${tempComment._id.toString()}`)
+            .set('Authorization', `Bearer ${tempUser.token}`);
+        })
+        .then(result =>{
+          expect(result.status).toEqual(204);
+          return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
+        })
+        .then(result => {
+          console.log(result.body);
         });
     });
   });
