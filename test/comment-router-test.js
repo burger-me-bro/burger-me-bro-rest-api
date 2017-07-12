@@ -58,17 +58,9 @@ describe('testing comment router', () => {
               'content': 'Let me tell you about this burger',
               'burger': tempBurger._id,
             })
-            .then(res => {
+            .catch(res => {
               tempComment = res.body;
-              expect(res.status).toEqual(200);
-              expect(res.body.title).toEqual('This Burger is bae');
-              expect(res.body.burger).toEqual(tempBurger._id);
-              expect(res.body._id).toExist();
-              return superagent.get(`${API_URL}/api/burgers/${tempBurger._id}`);
-            })
-            .then(res => {
               expect(res.status).toEqual(400);
-              expect(res.body.comment).toInclude(tempComment._id);
             });
         });
     });
