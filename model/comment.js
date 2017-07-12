@@ -24,10 +24,10 @@ commentSchema.pre('save', function (next) {
 });
 
 commentSchema.post('remove', function(doc,next){  
-  console.log('the doc',doc);
+  
   Burger.findById(doc.burger)
     .then(burger => {
-      burger.comment = burger.comment.filter(comment => comment._id !== doc._id);
+      burger.comment = burger.comment.filter(comment => doc._id.toString() !== comment.toString());
       return burger.save();
     })
     .then(()=> next())
