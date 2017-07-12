@@ -41,6 +41,8 @@ describe('testing burger router', () => {
         .then(res => {
           console.log('res^^^^^',res);
           expect(res.body).toExist();
+          expect(res.body.description).toEqual('so good!');
+          expect(res.body.name).toEqual('test_burgerr');
         });
     });
     it('should return a 400 for a bad request', () => {
@@ -83,7 +85,6 @@ describe('testing burger router', () => {
           return superagent.get(`${API_URL}/api/burgers/${tempBurger.name.toString()}`);
         })
         .catch(res => {
-          expect(res).toExist();
           expect(res.status).toEqual(404);
         });
     });
