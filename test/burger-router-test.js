@@ -10,7 +10,6 @@ const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
 const mockUser = require('./lib/mock-user.js');
 const mockBurger = require('./lib/mock-burger.js');
-const mockComment = require('./lib/mock-comment.js');
 
 
 let API_URL = process.env.API_URL;
@@ -98,8 +97,7 @@ describe('testing burger router', () => {
 
   describe('testing PUT /api/burgers', () => {
     it('should respond with the updated burger', () => {
-      let result, tempBurger, tempUser;
-      console.log('HERE IS THE PUT START!^^^^^^^^');
+      let tempBurger, tempUser;
       return mockBurger.createOne()
         .then(result => {
           tempBurger = result.burger;
@@ -115,7 +113,7 @@ describe('testing burger router', () => {
         });
     });
     it('should send over a 404 error', () => {
-      let result, tempBurger, tempUser;
+      let tempBurger, tempUser;
       return mockBurger.createOne()
         .then(result => {
           tempBurger = result.burger;
@@ -125,7 +123,6 @@ describe('testing burger router', () => {
             .set('Authorization',  `Bearer ${tempUser.token}`)
             .send({'description':'updated'});
         })
-        .then(res => {throw res})
         .catch(res => {
           console.log('res.status',res.status);
           expect(res.status).toEqual(404);
@@ -135,7 +132,7 @@ describe('testing burger router', () => {
 
   describe('testing the Delete route', () => {
     it('should delete the burger put into the database...', () => {
-      let result, tempBurger, tempUser;
+      let tempBurger, tempUser;
       return mockBurger.createOne()
         .then(result => {
           tempBurger = result.burger;
