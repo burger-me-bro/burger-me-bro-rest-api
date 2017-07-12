@@ -134,37 +134,18 @@ describe('testing burger router', () => {
   });
 
   describe('testing the Delete route', () => {
-    it.only('should delete the burger put into the database...', () => {
+    it('should delete the burger put into the database...', () => {
       let result, tempBurger, tempUser;
       return mockBurger.createOne()
         .then(result => {
           tempBurger = result.burger;
           tempUser = result.user;
-          console.log('tempuser.token!!!!!',tempUser.token);
           return superagent.delete(`${API_URL}/api/burgers/${tempBurger._id.toString()}`)
             .set('Authorization',  `Bearer ${tempUser.token}`);
         })
         .then(res => {
+
           expect(res.status).toEqual(204);
-        });
-    });
-  });
-
-
-
-  describe('testing the Delete that should remove comments and restaurants', () => {
-    it.only('should delete the burger put into the database... and the restaurants and comments', () => {
-      let result, tempBurger, tempUser;
-      return mockComment.createOne()
-        .then(result => {
-          tempBurger = result.burger;
-          tempUser = result.user;
-          console.log('tempuser.token!!!!!',tempUser.token);
-          return superagent.delete(`${API_URL}/api/burgerscompleteremoval/${tempBurger._id.toString()}`)
-            .set('Authorization',  `Bearer ${tempUser.token}`);
-        })
-        .then(res => {
-          console.log(res);
         });
     });
   });

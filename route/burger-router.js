@@ -53,19 +53,6 @@ burgerRouter.delete('/api/burgers/:id', (req,res,next) => {
     .find({})
     .then(() => {
       res.sendStatus(204);
-      console.log('this is the response!!, this....',this);
     })
     .catch(next);
-});
-
-burgerRouter.delete('/api/burgerscompleteremoval/:id', (req,res,next) => {
-
-  Burger.populate('comment')
-    .then(console.log(this));
-    // .find({})
-    // .then(() => {
-    //   res.sendStatus(204);
-    //   console.log('this is the response!!, this....',this);
-    // })
-    // .catch(next);
 });
