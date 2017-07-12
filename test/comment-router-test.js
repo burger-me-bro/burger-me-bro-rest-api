@@ -47,6 +47,32 @@ describe('testing comment router', () => {
         });
     });
 
+    it('should return a 400 user does not exist', () => {
+      return mockBurger.createOne()
+        .then(res => {
+          tempUser = res.user;
+          return superagent.post(`${API_URL}/api/comment`)
+            .set('Authorization', `Bearer ${tempUser.token}`)
+            .send({
+              'title': 'This Burger is bae',
+              'content': 'Let me tell you about this burger',
+              'burger': tempBurger._id,
+            })
+            .then(res => {
+              tempComment = res.body;
+              expect(res.status).toEqual(200);
+              expect(res.body.title).toEqual('This Burger is bae');
+              expect(res.body.burger).toEqual(tempBurger._id);
+              expect(res.body._id).toExist();
+              return superagent.get(`${API_URL}/api/burgers/${tempBurger._id}`);
+            })
+            .then(res => {
+              expect(res.status).toEqual(400);
+              expect(res.body.comment).toInclude(tempComment._id);
+            });
+        });
+    });
+
     it('should return a 400', () => {
       return superagent.post(`${API_URL}/api/comment`)
         .catch(res => {

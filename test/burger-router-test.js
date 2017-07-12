@@ -43,8 +43,6 @@ describe('testing burger router', () => {
           expect(res.body.name).toEqual('test_burgerr');
         });
     });
-
-
     it('should return a 409', () => {
       let testUserData;
       return mockUser.createOne()
@@ -86,6 +84,7 @@ describe('testing burger router', () => {
           expect(res.status).toEqual(400);
         });
     });
+
     it('should return a 500 for a server error', () => {
       return mockBurger.createOne()
         .then(userData => {
@@ -120,12 +119,6 @@ describe('testing burger router', () => {
         });
     });
   });
-
-
-
-
-
-
 
   describe('testing PUT /api/burgers', () => {
     it('should respond with the updated burger', () => {
