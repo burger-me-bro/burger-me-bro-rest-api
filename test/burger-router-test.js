@@ -10,7 +10,10 @@ const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
 const mockUser = require('./lib/mock-user.js');
 const mockBurger = require('./lib/mock-burger.js');
-
+const mockComment = require('./lib/mock-comment.js');
+const Restaurant = require('../model/restaurant.js');
+const faker = require('faker');
+const Comment = require('../model/comment.js');
 
 let API_URL = process.env.API_URL;
 
@@ -141,5 +144,34 @@ describe('testing burger router', () => {
           expect(res.status).toEqual(204);
         });
     });
+
+    it.only('should delete the burger AND ALL comments associated with this burger', () => {
+      let tempBurger, tempUser, tempComment, result;
+      return mockBurger.createOne()
+        .then(res => {
+          tempBurger = res.burger;
+          tempUser = res.user;
+          return new Comment({
+            user: res.user.user._id.toString(),
+            burger: res.burger._id.toString(),
+            title: faker.random.words(4),
+            content: faker.lorem.paragraph(5),
+            date: new Date(),
+          }).save();
+        })
+        .then(res => {
+          console.log(res);
+
+
+          // return superagent.delete(`${API_URL}/api/burgers/${tempBurger._id.toString()}`)
+          //   .set('Authorization',  `Bearer ${tempUser.token}`);
+        });
+        // .then(res => {
+        //   console.log(res);
+        //   expect(res.status).toEqual(204);
+        // });
+    });
   });
+
+
 });

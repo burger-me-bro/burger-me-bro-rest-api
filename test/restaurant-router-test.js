@@ -20,7 +20,7 @@ describe('testing restaurant router', () => {
   let tempBurger, tempUser, tempRestaurant;
 
   describe('testing POST route', () => {
-    it('should return 200', () => {
+    it.only('should return 200', () => {
       return mockBurger.createOne()
         .then(res => {
           tempBurger = res.burger;
