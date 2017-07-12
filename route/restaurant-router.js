@@ -44,7 +44,6 @@ restaurantRouter.put('/api/restaurant/:id', bodyParser, (req, res, next) => {
 });
 
 restaurantRouter.delete('/api/restaurant/:id', bodyParser, (req, res, next) => {
-  console.log('hit DELETE route for restaurant');
   Restaurant.findByIdAndRemove(req.params.id)
     .then(() => res.sendStatus(204))
     .catch(next);
