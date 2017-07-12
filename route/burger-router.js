@@ -35,19 +35,37 @@ burgerRouter.get('/api/burgers/:id', (req, res, next) => {
     .catch(next);
 });
 
-burgerRouter.put('/api/burgers/:id', bodyParser, (req, res, next) => {
+burgerRouter.put('/api/burgers/:id',bearerAuth, bodyParser, (req, res, next) => {
   let options = {
     runValidators: true,
     new: true,
   };
+  console.log(req.body);
   Burger.findByIdAndUpdate(req.params.id, req.body, options)
-    .then(restaurant => res.json(restaurant))
+    .then(burger => res.json(burger))
     .catch(next);
 });
 
+
 burgerRouter.delete('/api/burgers/:id', (req,res,next) => {
+
   Burger.findByIdAndRemove(req.params.id)
     .find({})
-    .then(() => res.sendStatus(204))
+    .then(() => {
+      res.sendStatus(204);
+      console.log('this is the response!!, this....',this);
+    })
     .catch(next);
+});
+
+burgerRouter.delete('/api/burgerscompleteremoval/:id', (req,res,next) => {
+
+  Burger.populate('comment')
+    .then(console.log(this));
+    // .find({})
+    // .then(() => {
+    //   res.sendStatus(204);
+    //   console.log('this is the response!!, this....',this);
+    // })
+    // .catch(next);
 });

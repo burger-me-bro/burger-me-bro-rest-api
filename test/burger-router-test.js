@@ -10,6 +10,8 @@ const server = require('../lib/server.js');
 const cleanDB = require('./lib/clean-db.js');
 const mockUser = require('./lib/mock-user.js');
 const mockBurger = require('./lib/mock-burger.js');
+const mockComment = require('./lib/mock-comment.js');
+
 
 let API_URL = process.env.API_URL;
 
@@ -24,7 +26,9 @@ describe('testing burger router', () => {
       let testUserData;
       return mockUser.createOne()
         .then(userData => {
+
           testUserData = userData;
+          console.log(testUserData);
           return superagent.post(`${API_URL}/api/burgers`)
             .set('Authorization',  `Bearer ${testUserData.token}`)
             .field('name', 'test_burgerr')
@@ -36,6 +40,7 @@ describe('testing burger router', () => {
             .attach('image', `${__dirname}/assets/burger.jpg`);
         })
         .then(res => {
+          console.log('res^^^^^',res);
           expect(res.body).toExist();
         });
     });
@@ -81,6 +86,85 @@ describe('testing burger router', () => {
         .catch(res => {
           expect(res).toExist();
           expect(res.status).toEqual(404);
+        });
+    });
+  });
+
+
+
+
+
+
+
+  describe('testing PUT /api/burgers', () => {
+    it('should respond with the updated burger', () => {
+      let result, tempBurger, tempUser;
+      console.log('HERE IS THE PUT START!^^^^^^^^');
+      return mockBurger.createOne()
+        .then(result => {
+          tempBurger = result.burger;
+          tempUser = result.user;
+          console.log('tempuser.token!!!!!',tempUser.token);
+          return superagent.put(`${API_URL}/api/burgers/${tempBurger._id.toString()}`)
+            .set('Authorization',  `Bearer ${tempUser.token}`)
+            .send({'description':'updated'});
+        })
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body.description).toEqual('updated');
+        });
+    });
+    it('should send over a 404 error', () => {
+      let result, tempBurger, tempUser;
+      return mockBurger.createOne()
+        .then(result => {
+          tempBurger = result.burger;
+          tempUser = result.user;
+
+          return superagent.put(`${API_URL}/api/burgers/${tempBurger.description.toString()}`)
+            .set('Authorization',  `Bearer ${tempUser.token}`)
+            .send({'description':'updated'});
+        })
+        .then(res => {throw res})
+        .catch(res => {
+          console.log('res.status',res.status);
+          expect(res.status).toEqual(404);
+        });
+    });
+  });
+
+  describe('testing the Delete route', () => {
+    it.only('should delete the burger put into the database...', () => {
+      let result, tempBurger, tempUser;
+      return mockBurger.createOne()
+        .then(result => {
+          tempBurger = result.burger;
+          tempUser = result.user;
+          console.log('tempuser.token!!!!!',tempUser.token);
+          return superagent.delete(`${API_URL}/api/burgers/${tempBurger._id.toString()}`)
+            .set('Authorization',  `Bearer ${tempUser.token}`);
+        })
+        .then(res => {
+          expect(res.status).toEqual(204);
+        });
+    });
+  });
+
+
+
+  describe('testing the Delete that should remove comments and restaurants', () => {
+    it.only('should delete the burger put into the database... and the restaurants and comments', () => {
+      let result, tempBurger, tempUser;
+      return mockComment.createOne()
+        .then(result => {
+          tempBurger = result.burger;
+          tempUser = result.user;
+          console.log('tempuser.token!!!!!',tempUser.token);
+          return superagent.delete(`${API_URL}/api/burgerscompleteremoval/${tempBurger._id.toString()}`)
+            .set('Authorization',  `Bearer ${tempUser.token}`);
+        })
+        .then(res => {
+          console.log(res);
         });
     });
   });
