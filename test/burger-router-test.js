@@ -44,28 +44,28 @@ describe('testing burger router', () => {
         });
     });
 
-    // it('should return a 200', () => {
-    //   let testUserData;
-    //   return mockUser.createOne()
-    //     .then(userData => {
-    //
-    //       testUserData = userData;
-    //       return superagent.post(`${API_URL}/api/burgers`)
-    //         .set('Authorization',  `Bearer ${testUserData.token}`)
-    //         .field('name', 'test_burgerr')
-    //         .field('rating', 'good')
-    //         .field('price', 5)
-    //         .field('flavor_profile', 'tangy')
-    //         .field('description', 'so good!')
-    //         .field('veggie', false)
-    //         .attach('image', `${__dirname}/burger.jpg`);
-    //     })
-    //     .then(res => {
-    //       expect(res.body).toExist();
-    //       expect(res.body.description).toEqual('so good!');
-    //       expect(res.body.name).toEqual('test_burgerr');
-    //     });
-    // });
+    it('should return a 200', () => {
+      let testUserData;
+      return mockUser.createOne()
+        .then(userData => {
+
+          testUserData = userData;
+          return superagent.post(`${API_URL}/api/burgers`)
+            .set('Authorization',  `Bearer ${testUserData.token}`)
+            .field('name', 'test_burgerr')
+            .field('rating', 'good')
+            .field('price', 5)
+            .field('flavor_profile', 'tangy')
+            .field('description', 'so good!')
+            .field('veggie', false)
+            .attach('image', `${__dirname}/assets/burger.jpg`);
+        })
+        .then(res => {
+          expect(res.body).toExist();
+          expect(res.body.description).toEqual('so good!');
+          expect(res.body.name).toEqual('test_burgerr');
+        });
+    });
 
 
     it('should return a 409', () => {
