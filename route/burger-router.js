@@ -10,6 +10,7 @@ const bodyParser = require('body-parser').json();
 const burgerRouter = module.exports = new Router();
 
 burgerRouter.post('/api/burgers', bearerAuth, s3Upload('image'), (req,res, next) => {
+  console.log('hit POST route for burger');
   new Burger({
     name: req.body.name,
     rating: req.body.rating,
@@ -26,6 +27,7 @@ burgerRouter.post('/api/burgers', bearerAuth, s3Upload('image'), (req,res, next)
 
 
 burgerRouter.get('/api/burgers/:id', (req, res, next) => {
+  console.log('hit GET route for burger');
   Burger.findById(req.params.id)
     .then(burger => {
       res.json(burger);
@@ -34,6 +36,7 @@ burgerRouter.get('/api/burgers/:id', (req, res, next) => {
 });
 
 burgerRouter.put('/api/burgers/:id', bearerAuth, bodyParser, (req, res, next) => {
+  console.log('hit PUT route for burger');
   let options = {
     runValidators: true,
     new: true,
@@ -45,8 +48,9 @@ burgerRouter.put('/api/burgers/:id', bearerAuth, bodyParser, (req, res, next) =>
 
 
 burgerRouter.delete('/api/burgers/:id', (req,res,next) => {
-  Burger.findByIdAndRemove(req.params.id)
-    .find({})
+  console.log('hit DELETE route for burger');
+  Burger.findById(req.params.id)
+    .then(burger => burger.remove())
     .then(() => {
       res.sendStatus(204);
     })

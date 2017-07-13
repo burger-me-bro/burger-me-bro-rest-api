@@ -23,7 +23,6 @@ mockComment.createOne = () => {
     })
     .then(comment => {
       res.comment = comment;
-      console.log('this is the ressssss',res.comment);
       return res;
     });
 };
