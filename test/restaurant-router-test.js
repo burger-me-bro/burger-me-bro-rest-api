@@ -4,7 +4,7 @@ require('dotenv').config({ path: `${process.cwd()}/.test.env` });
 const superagent = require('superagent');
 const expect = require('expect');
 
-// require('./lib/aws-mock.js');
+require('./lib/aws-mock.js');
 const mockRestaurant = require('./lib/mock-restaurant.js');
 const mockBurger = require('./lib/mock-burger.js');
 
@@ -52,13 +52,6 @@ describe('testing restaurant router', () => {
   it('should return a 400 due to invalid burger id', () => {
     return superagent.post(`${API_URL}/api/restaurant`)
       .field('burger', 'not a valid id')
-      .catch(res => {
-        expect(res.status).toEqual(400);
-      });
-  });
-   it('should return a 400 due to invalid burger id', () => {
-    return superagent.post(`${API_URL}/api/restaurant`)
-      .field('name', 'not a valid id')
       .catch(res => {
         expect(res.status).toEqual(400);
       });
@@ -121,14 +114,12 @@ describe('testing restaurant router', () => {
     it('should respond with a 204', () => {
       return mockRestaurant.createOne()
         .then(res => {
-            console.log(res.restaurant);
           tempBurger = res.burger;
           tempUser = res.user;
           tempRestaurant = res.restaurant;
           return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
         })
         .then(result => {
-            console.log(result.body);
           expect(result.status).toEqual(200);
           expect(result.body.restaurant).toInclude(tempRestaurant._id);
         })

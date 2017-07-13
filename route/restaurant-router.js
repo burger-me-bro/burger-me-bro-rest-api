@@ -1,7 +1,6 @@
 'use strict';
 
 const { Router } = require('express');
-// const Router = module.exports = require('express').Router();
 const Restaurant = require('../model/restaurant.js');
 
 const bodyParser = require('body-parser').json();
