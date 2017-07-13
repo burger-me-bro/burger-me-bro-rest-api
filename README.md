@@ -590,3 +590,7 @@ Sent in form-data type!
       204 - successful burger deleted  
       400 - missing or invalid body  
       500 - internal server error  
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0e733006ad4fe1da58a91c8487f7cb8b739549d6
