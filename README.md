@@ -45,7 +45,7 @@ REST API for Burger Me Bro's
 
 **GET** for logging into a user account.
 
-**/api/restaurant**  
+**/api/login**  
 * **Description**
 
 
@@ -128,7 +128,7 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
 
 **GET** used to retrieve a comment by getting the id
 
-**/api/restaurant/:id**  
+**/api/comment/:id**  
 * **Description**
     Returns the contents of the comment. The user must provide the comment id and pass it in the url.
 
@@ -164,7 +164,7 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
   500 - internal server error
 
 **PUT** used to update the title and the content of the comment
-**/api/restaurant/:id**  
+**/api/comment/:id**  
 
 * **Description**
     The user provides the updated values of the content or the title properties. In order of users to successfully update the values a Bearer token is required. The user must provide the comment id and pass it in the url.
@@ -208,7 +208,7 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
 
 **DELETE** used to update the title and the content of the comment
 
-**/api/restaurant/:id**  
+**/api/comment/:id**  
 * **Description**
     The user provides the updated values of the content or the title properties. In order of users to successfully update the values a Bearer token is required. The user must provide the comment id and pass it in the url.
 
@@ -258,12 +258,12 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
 
   ##### Example Body
   ```
-  {
-    "name":"example_name_of_restaurant",
-   "location":"example_location_of_restaurant",
-   "burger":"[burger._id]", //optional
-   "photo_url": image
-  }
+  Sent in form-data type
+
+  name = Burger Palace
+  location = Seattle, WA
+  burger = [burger._id]
+  image = [file location]
   ```
 
 
@@ -281,36 +281,36 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
         "5966a18750e9e500112e754b"
     ]
   }
- ```
-##### Response Codes
+  ```
+  ##### Response Codes
 
   200 - successful restaurant was created  
   400 - missing or invalid body  
   500 - internal server error
 
+**GET** for finding a restaurant.
 
-  **GET** for finding a restaurant.
-
-  **/api/restaurant/:id**  
+**/api/restaurant/:id**  
   * **Description**  
 
 
   * **Required Data**
 
-    ##### Example Header
-    ```
+##### Example Header
+```
     Content-Type: 'application/json'
     Authorization: 'Bearer <token>'
-    ```
+```
 
-    ##### Example Body
-    ```
-    {"id": "example_id"}
-    ```
+##### Example Body
+```
+no body
+```
 
 
- **Example Response**  
+  * **Example Response**  
 ##### Successful
+```
     {
       "__v": 0,
       "userID": "5967b7057cffe1001198bb95",
@@ -321,9 +321,88 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
       "burger": [
           "5966a18750e9e500112e754b"
       ]
-    }
+  }
+```
 ##### Response Codes
 
     200 - successful restaurant returned  
     400 - missing or invalid body  
     500 - internal server error  
+
+
+**PUT** for updating a restaurant.
+
+  **/api/restaurant/:id**  
+  * **Description**  
+
+    This route will update one or more of the properties on the body
+
+
+  * **Required Data**
+
+##### Example Header
+```
+    Content-Type: 'application/json'
+    Authorization: 'Bearer <token>'
+```
+
+##### Example Body
+```
+    {"id": "example_id"
+     "name: "New Burger"
+    }
+```
+
+* **Example Response**  
+##### Successful
+   ```
+{
+      "__v": 0,
+      "userID": "5967b7057cffe1001198bb95",
+      "name": "New Burger",
+      "location": "Seattle, WA",
+      "photo_url": "https://code-fellows-burger-me-bro.s3-us-west-2.amazonaws.com/a2fc9fbd60a8fda4a0988bafac505bef.png",
+      "_id": "5967b7137cffe1001198bb96",
+      "burger": [
+          "5966a18750e9e500112e754b"
+      ]
+}
+   ```
+##### Response Codes
+
+    200 - successful restaurant returned  
+    400 - missing or invalid body  
+    500 - internal server error  
+
+**DELETE** for deleting a restaurant.
+
+  **/api/restaurant/:id**  
+   * **Description**  
+
+
+   * **Required Data**
+
+##### Example Header
+```
+    Content-Type: 'application/json'
+    Authorization: 'Bearer <token>'
+```
+
+##### Example Body
+```
+    no body
+```
+
+   * **Example Response**  
+
+##### Successful
+```
+    nothing will display
+```
+    
+##### Response Codes
+
+    204 - successful restaurant deletion 
+
+
+  
