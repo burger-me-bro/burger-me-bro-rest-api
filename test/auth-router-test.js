@@ -17,7 +17,7 @@ describe('testing auth router', () => {
   before(server.start);
   after(server.stop);
   afterEach(cleanDB);
-
+  let testUser;
   describe('testing POST /api/signup', () => {
     it('should respond with token', () => {
       return superagent.post(`${API_URL}/api/signup`)
@@ -43,7 +43,6 @@ describe('testing auth router', () => {
 
   describe('testing GET /api/login', () => {
     it('should respond with token', () => {
-      let testUser;
       return mockUser.createOne()
         .then(userData => {
           testUser = userData.user;
@@ -77,7 +76,6 @@ describe('testing auth router', () => {
         });
     });
     it('should respond with 400 for no username or pass provided', () => {
-      let testUser;
       return mockUser.createOne()
         .then(userData => {
           testUser = userData.user;
@@ -90,7 +88,6 @@ describe('testing auth router', () => {
         });
     });
     it('should respond with 400, username does not exist', () => {
-      let testUser;
       return mockUser.createOne()
         .then(userData => {
           testUser = userData.user;
@@ -103,7 +100,6 @@ describe('testing auth router', () => {
         });
     });
     it('should respond with 400 for cannot find user in auth middleware', () => {
-      let testUser;
       return mockUser.createOne()
         .then(userData => {
           testUser = userData.user;
@@ -117,11 +113,9 @@ describe('testing auth router', () => {
     });
 
     it('should return no bearer auth provided', () => {
-      let testUser;
       return mockUser.createOne()
         .then(userData => {
           testUser = userData.user;
-          console.log(testUser);
           return superagent.post(`${API_URL}/api/burgers`)
             .set('Authorization',  `Bearer`);
         })

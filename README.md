@@ -328,81 +328,269 @@ no body
     200 - successful restaurant returned  
     400 - missing or invalid body  
     500 - internal server error  
+    **PUT** for updating a restaurant.
+
+      **/api/restaurant/:id**  
+      * **Description**  
+
+        This route will update one or more of the properties on the body
 
 
-**PUT** for updating a restaurant.
+      * **Required Data**
 
-  **/api/restaurant/:id**  
+    ##### Example Header
+    ```
+        Content-Type: 'application/json'
+        Authorization: 'Bearer <token>'
+    ```
+
+    ##### Example Body
+    ```
+        {"id": "example_id"
+         "name: "New Burger"
+        }
+    ```
+
+    * **Example Response**  
+    ##### Successful
+       ```
+    {
+          "__v": 0,
+          "userID": "5967b7057cffe1001198bb95",
+          "name": "New Burger",
+          "location": "Seattle, WA",
+          "photo_url": "https://code-fellows-burger-me-bro.s3-us-west-2.amazonaws.com/a2fc9fbd60a8fda4a0988bafac505bef.png",
+          "_id": "5967b7137cffe1001198bb96",
+          "burger": [
+              "5966a18750e9e500112e754b"
+          ]
+    }
+       ```
+    ##### Response Codes
+
+        200 - successful restaurant returned  
+        400 - missing or invalid body  
+        500 - internal server error  
+
+    **DELETE** for deleting a restaurant.
+
+      **/api/restaurant/:id**  
+       * **Description**  
+
+
+       * **Required Data**
+
+    ##### Example Header
+    ```
+        Content-Type: 'application/json'
+        Authorization: 'Bearer <token>'
+    ```
+
+    ##### Example Body
+    ```
+        no body
+    ```
+
+       * **Example Response**  
+
+    ##### Successful
+    ```
+        nothing will display
+    ```
+
+    ##### Response Codes
+
+        204 - successful restaurant deletion
+
+
+#### Burger  ####  
+
+**POST** for creating a new Burger.
+
+**/api/burgers**  
+* **Description**  
+User must be authorized, then a new burger can be created by providing the following information...
+    -name
+    -rating
+    -price
+    -flavor_profile
+    -description
+    -veggie
+    -image [file location that is attached to the request]
+
+* **Required Data**
+
+##### Example Header
+```
+Authorization: 'Bearer <token>'
+```
+
+##### Example Body
+Sent in form-data type!
+
+```
+  name = dicks specialty burger ;)
+  rating = really good
+  price = 5
+  flavor_profile = funky
+  description = extra sauce, its so good,
+  image = [file location],
+```
+
+
+* **Example Response**  
+##### Successful
+```
+{
+    "__v": 0,
+    "name": "dicks specialty burger ;)",
+    "rating": "really good",
+    "price": 5,
+    "description": "extra sauce, its so good",
+    "photo_URL": "https://code-fellows-burger-me-bro.s3.amazonaws.com/097c76774b36759074a7de591686b32a.jpg",
+    "veggie": false,
+    "_id": "5967e3b6bb3e7e0011133531",
+    "comment": [],
+    "restaurant": [],
+    "flavor_profile": [
+        "funky"
+    ]
+}
+```
+##### Response Codes
+
+200 - successful burger was created  
+400 - missing or invalid body  
+500 - internal server error
+
+
+**GET** for finding a burger.
+
+**/api/burgers/:id**  
+* **Description**  
+
+
+* **Required Data**
+
+  ##### Example Header
+  ```
+  Authorization: 'Bearer <token>'
+  ```
+
+  ##### Example Body
+  ```
+  {"id": "example_id"
+  }
+  ```
+
+
+* **Example Response**  
+  ##### Successful
+  ```
+  {
+    "_id": "5967e3b6bb3e7e0011133531",
+    "name": "dicks specialty burger ;)",
+    "rating": "really good",
+    "price": 5,
+    "description": "extra sauce, its so good",
+    "photo_URL": "https://code-fellows-burger-me-bro.s3.amazonaws.com/097c76774b36759074a7de591686b32a.jpg",
+    "veggie": false,
+    "__v": 0,
+    "comment": [],
+    "restaurant": [],
+    "flavor_profile": [
+        "funky"
+    ]
+}
+  ```
+  ##### Response Codes
+
+  200 - successful burger returned  
+  400 - missing or invalid body  
+  500 - internal server error  
+
+
+  **PUT** for updating a burger profile.
+
+  **/api/burgers/:id**  
   * **Description**  
-
-    This route will update one or more of the properties on the body
 
 
   * **Required Data**
 
-##### Example Header
-```
+    ##### Example Header
+    ```
     Content-Type: 'application/json'
     Authorization: 'Bearer <token>'
-```
+    ```
 
-##### Example Body
-```
-    {"id": "example_id"
-     "name: "New Burger"
-    }
-```
+    ##### Example Body
+    sent in JSON
+    ```
+    {"description":"they changed the sauce, its not good anymore"}
 
-* **Example Response**  
-##### Successful
-   ```
-{
-      "__v": 0,
-      "userID": "5967b7057cffe1001198bb95",
-      "name": "New Burger",
-      "location": "Seattle, WA",
-      "photo_url": "https://code-fellows-burger-me-bro.s3-us-west-2.amazonaws.com/a2fc9fbd60a8fda4a0988bafac505bef.png",
-      "_id": "5967b7137cffe1001198bb96",
-      "burger": [
-          "5966a18750e9e500112e754b"
-      ]
+    ```
+
+
+  * **Example Response**  
+    ##### Successful
+    ```
+    {
+    "_id": "5967e3b6bb3e7e0011133531",
+    "name": "dicks specialty burger ;)",
+    "rating": "really bad",
+    "price": 5,
+    "description": "they changed the sauce, its not good anymore",
+    "photo_URL": "https://code-fellows-burger-me-bro.s3.amazonaws.com/097c76774b36759074a7de591686b32a.jpg",
+    "veggie": false,
+    "__v": 0,
+    "comment": [],
+    "restaurant": [],
+    "flavor_profile": [
+        "funky"
+    ]
 }
-   ```
-##### Response Codes
+    ```
+    ##### Response Codes
 
-    200 - successful restaurant returned  
+    200 - successful burger returned  
     400 - missing or invalid body  
     500 - internal server error  
 
-**DELETE** for deleting a restaurant.
 
-  **/api/restaurant/:id**  
-   * **Description**  
+    **DELETE** for deleting a burger profile.
 
-
-   * **Required Data**
-
-##### Example Header
-```
-    Content-Type: 'application/json'
-    Authorization: 'Bearer <token>'
-```
-
-##### Example Body
-```
-    no body
-```
-
-   * **Example Response**  
-
-##### Successful
-```
-    nothing will display
-```
-    
-##### Response Codes
-
-    204 - successful restaurant deletion 
+    **/api/burgers/:id**  
+    * **Description**  
 
 
-  
+    * **Required Data**
+
+      ##### Example Header
+      ```
+      Content-Type: 'application/json'
+      Authorization: 'Bearer <token>'
+      ```
+
+      ##### Example Body
+
+      ```
+      {"id": "example_id"
+      }
+      ```
+
+
+    * **Example Response**  
+      ##### Successful
+
+      SENDS A STATUS OF 204..
+
+      ##### Response Codes
+
+      204 - successful burger deleted  
+      400 - missing or invalid body  
+      500 - internal server error  
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0e733006ad4fe1da58a91c8487f7cb8b739549d6
