@@ -29,7 +29,6 @@ restaurantSchema.post('remove', function(doc,next){
 
   Burger.findById(doc.burger)
     .then(burger => {
-      console.log(burger);
       burger.restaurant = burger.restaurant.filter(restaurant => doc._id.toString() !== restaurant.toString());
       return burger.save();
     })
