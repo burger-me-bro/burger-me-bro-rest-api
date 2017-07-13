@@ -45,8 +45,8 @@ burgerRouter.put('/api/burgers/:id', bearerAuth, bodyParser, (req, res, next) =>
 
 
 burgerRouter.delete('/api/burgers/:id', (req,res,next) => {
-  Burger.findByIdAndRemove(req.params.id)
-    .find({})
+  Burger.findById(req.params.id)
+    .then(burger => burger.remove())
     .then(() => {
       res.sendStatus(204);
     })
