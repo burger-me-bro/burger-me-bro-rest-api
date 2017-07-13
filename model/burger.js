@@ -10,7 +10,7 @@ const burgerSchema = mongoose.Schema({
   flavor_profile: [{type:String, required:true, minlength:1, enum:['tangy','sweet','spicy','funky','crunchy','savory','greasy']}],
   description:{type:String, required:true, minlength:1},
   photo_URL: {type:String, required:true, minlength:1},
-  veggie:{type:Boolean, required:true, minlength:1}, //this might just be veggie: Boolean, need to check once routes are created....
+  veggie:{type:Boolean, required:true, minlength:1},
   restaurant: [{type: mongoose.Schema.Types.ObjectId, ref:'restaurant'}],
   comment: [{type: mongoose.Schema.Types.ObjectId, ref:'comment'}],
 });

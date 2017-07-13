@@ -168,4 +168,200 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
     500 - internal server error  
 
 
-  
+
+
+
+
+
+
+
+
+
+
+#### Burger  ####  
+
+**POST** for creating a new Burger.
+
+**/api/burgers**  
+* **Description**  
+User must be authorized, then a new burger can be created by providing the following information...
+    -name
+    -rating
+    -price
+    -flavor_profile
+    -description
+    -veggie
+    -image [file location that is attached to the request]
+
+* **Required Data**
+
+##### Example Header
+```
+Authorization: 'Bearer <token>'
+```
+
+##### Example Body
+Sent in form-data type!
+
+```
+  name = dicks specialty burger ;)
+  rating = really good
+  price = 5
+  flavor_profile = funky
+  description = extra sauce, its so good,
+  image = [file location],
+```
+
+
+* **Example Response**  
+##### Successful
+```
+{
+    "__v": 0,
+    "name": "dicks specialty burger ;)",
+    "rating": "really good",
+    "price": 5,
+    "description": "extra sauce, its so good",
+    "photo_URL": "https://code-fellows-burger-me-bro.s3.amazonaws.com/097c76774b36759074a7de591686b32a.jpg",
+    "veggie": false,
+    "_id": "5967e3b6bb3e7e0011133531",
+    "comment": [],
+    "restaurant": [],
+    "flavor_profile": [
+        "funky"
+    ]
+}
+```
+##### Response Codes
+
+200 - successful burger was created  
+400 - missing or invalid body  
+500 - internal server error
+
+
+**GET** for finding a burger.
+
+**/api/burgers/:id**  
+* **Description**  
+
+
+* **Required Data**
+
+  ##### Example Header
+  ```
+  Authorization: 'Bearer <token>'
+  ```
+
+  ##### Example Body
+  ```
+  {"id": "example_id"
+  }
+  ```
+
+
+* **Example Response**  
+  ##### Successful
+  ```
+  {
+    "_id": "5967e3b6bb3e7e0011133531",
+    "name": "dicks specialty burger ;)",
+    "rating": "really good",
+    "price": 5,
+    "description": "extra sauce, its so good",
+    "photo_URL": "https://code-fellows-burger-me-bro.s3.amazonaws.com/097c76774b36759074a7de591686b32a.jpg",
+    "veggie": false,
+    "__v": 0,
+    "comment": [],
+    "restaurant": [],
+    "flavor_profile": [
+        "funky"
+    ]
+}
+  ```
+  ##### Response Codes
+
+  200 - successful burger returned  
+  400 - missing or invalid body  
+  500 - internal server error  
+
+
+  **PUT** for updating a burger profile.
+
+  **/api/burgers/:id**  
+  * **Description**  
+
+
+  * **Required Data**
+
+    ##### Example Header
+    ```
+    Content-Type: 'application/json'
+    Authorization: 'Bearer <token>'
+    ```
+
+    ##### Example Body
+    sent in JSON
+    ```
+    {"description":"they changed the sauce, its not good anymore"}
+
+    ```
+
+
+  * **Example Response**  
+    ##### Successful
+    ```
+    {
+    "_id": "5967e3b6bb3e7e0011133531",
+    "name": "dicks specialty burger ;)",
+    "rating": "really bad",
+    "price": 5,
+    "description": "they changed the sauce, its not good anymore",
+    "photo_URL": "https://code-fellows-burger-me-bro.s3.amazonaws.com/097c76774b36759074a7de591686b32a.jpg",
+    "veggie": false,
+    "__v": 0,
+    "comment": [],
+    "restaurant": [],
+    "flavor_profile": [
+        "funky"
+    ]
+}
+    ```
+    ##### Response Codes
+
+    200 - successful burger returned  
+    400 - missing or invalid body  
+    500 - internal server error  
+
+
+    **DELETE** for deleting a burger profile.
+
+    **/api/burgers/:id**  
+    * **Description**  
+
+
+    * **Required Data**
+
+      ##### Example Header
+      ```
+      Content-Type: 'application/json'
+      Authorization: 'Bearer <token>'
+      ```
+
+      ##### Example Body
+
+      ```
+      {"id": "example_id"
+      }
+      ```
+
+
+    * **Example Response**  
+      ##### Successful
+
+      SENDS A STATUS OF 204..
+
+      ##### Response Codes
+
+      204 - successful burger deleted  
+      400 - missing or invalid body  
+      500 - internal server error  
