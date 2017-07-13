@@ -1,4 +1,6 @@
-# Burger Me Bro's
+![alt text](http://i.imgur.com/DNs7cG4.png "Logo Title Text 1")
+
+
 REST API for Burger Me Bro's
 [![Build Status](https://travis-ci.org/burger-me-bro/burger-me-bro-rest-api.svg?branch=master)](https://travis-ci.org/burger-me-bro/burger-me-bro-rest-api)
 ## Routes
@@ -325,5 +327,3 @@ eyJ0b2tlblNlZWQiOiJmZmE1MDRhYTNjNTA0NDk4MzFhOTA5NzUxOTVjNmM0ZmQ2ZDZkMzU4NzI5ZTYw
     200 - successful restaurant returned  
     400 - missing or invalid body  
     500 - internal server error  
-
-
