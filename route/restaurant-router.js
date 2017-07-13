@@ -1,6 +1,6 @@
 'use strict';
 
-const {Router} = require('express');
+const { Router } = require('express');
 // const Router = module.exports = require('express').Router();
 const Restaurant = require('../model/restaurant.js');
 
@@ -44,7 +44,8 @@ restaurantRouter.put('/api/restaurant/:id', bodyParser, (req, res, next) => {
 });
 
 restaurantRouter.delete('/api/restaurant/:id', bodyParser, (req, res, next) => {
-  Restaurant.findByIdAndRemove(req.params.id)
+  Restaurant.findById(req.params.id)
+    .then(restaurant => restaurant.remove())
     .then(() => res.sendStatus(204))
     .catch(next);
 });

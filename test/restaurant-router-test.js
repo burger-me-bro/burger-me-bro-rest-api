@@ -56,6 +56,13 @@ describe('testing restaurant router', () => {
         expect(res.status).toEqual(400);
       });
   });
+   it('should return a 400 due to invalid burger id', () => {
+    return superagent.post(`${API_URL}/api/restaurant`)
+      .field('name', 'not a valid id')
+      .catch(res => {
+        expect(res.status).toEqual(400);
+      });
+  });
 
   it('should return a 500 for a server error', () => {
     return mockRestaurant.createOne()
@@ -111,35 +118,23 @@ describe('testing restaurant router', () => {
   });
 
   describe('testing DELETE route', () => {
-    it('should return a 204', () => {
+    it('should respond with a 204', () => {
       return mockRestaurant.createOne()
         .then(res => {
+            console.log(res.restaurant);
           tempBurger = res.burger;
           tempUser = res.user;
           tempRestaurant = res.restaurant;
+          return superagent.get(`${API_URL}/api/burgers/${tempBurger._id.toString()}`);
+        })
+        .then(result => {
+            console.log(result.body);
+          expect(result.status).toEqual(200);
+          expect(result.body.restaurant).toInclude(tempRestaurant._id);
+        })
+        .then(() => {
           return superagent.delete(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`)
             .set('Authorization', `Bearer ${tempUser.token}`);
-        })
-        .then(res => {
-          expect(res.status).toEqual(204);
-          return superagent.get(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`);
-        })
-        .catch(res => {
-          expect(res.status).toEqual(404);
-        });
-    });
-
-    it('should return a 400', () => {
-      return mockRestaurant.createOne()
-        .then(res => {
-          tempBurger = res.burger;
-          tempUser = res.user;
-          tempRestaurant = res.restaurant;
-          return superagent.delete(`${API_URL}/api/restaurant/${tempRestaurant._id.toString()}`)
-            .set('Authorization', `Bearer invalidtoken123123`);
-        })
-        .catch(res => {
-          expect(res.status).toEqual(400);
         });
     });
   });
