@@ -3,6 +3,20 @@
 
 REST API for Burger Me
 [![Build Status](https://travis-ci.org/burger-me-bro/burger-me-bro-rest-api.svg?branch=master)](https://travis-ci.org/burger-me-bro/burger-me-bro-rest-api)
+
+## About The Team
+![alt text](https://avatars6.githubusercontent.com/u/12539431?v=4&u=e568b683813452c39debf117e0162d7210aaf85e&s=128 "Logo Title Text 1")  
+Joshua Evans - I spent the last ten years working in the music industry.  I owned an independent record store for much of that time.  While running my business, I was always looking for ways to solve problems, often with technical solutions.  I became passionate about learning coding, realizing that there were opportunities to contribute to the future of the music industry with technological applications.  
+  
+![alt text](https://avatars6.githubusercontent.com/u/7001751?v=4&s=128 "Logo Title Text 1")  
+Nicu - A cool Army guy who is a great software developer.  
+
+![alt text](https://avatars7.githubusercontent.com/u/24236782?v=4&s=128 "Logo Title Text 1")  
+Justin Green - US Army Vet that love working and learning with other! That was my favorite part of being in the military and it translates perfectly to being a software developer. I'm learning I'm working towards the position to meaningfully contribute to this wonderful community!  
+
+![alt text](https://avatars7.githubusercontent.com/u/24594684?v=4&s=460 "Logo Title Text 1")  
+Michael Axelson - Most of my experience is in the financial services industry. I am currently working on projects primarily in JavaScript, with beginner level experience in Python and SQL. I am very interested in full-stack application, using Node.js for the backend and React for the front-end.
+
 ## Routes
 
 #### Signup and Login  ####  
