@@ -409,7 +409,7 @@ no body
 
 **/api/burgers**  
 * **Description**  
-User must be authorized, then a new burger can be created by providing the following information...
+  User must be authorized, then a new burger can be created by providing the following information...
     -name
     -rating
     -price
@@ -468,7 +468,7 @@ Sent in form-data type!
 
 **/api/burgers/:id**  
 * **Description**  
-
+  User must be authorized, and burger information can be retrieved by providing the following information...
 
 * **Required Data**
 
@@ -514,7 +514,7 @@ Sent in form-data type!
 
   **/api/burgers/:id**  
   * **Description**  
-
+    User must be authorized, and then burger information can be updated by providing the following information...
 
   * **Required Data**
 
@@ -562,7 +562,7 @@ Sent in form-data type!
 
     **/api/burgers/:id**  
     * **Description**  
-
+    User must be authorized, then a burger can be deleted by providing the following information...
 
     * **Required Data**
 
@@ -590,7 +590,3 @@ Sent in form-data type!
       204 - successful burger deleted  
       400 - missing or invalid body  
       500 - internal server error  
-<<<<<<< HEAD
-=======
-
->>>>>>> 0e733006ad4fe1da58a91c8487f7cb8b739549d6
